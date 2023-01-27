@@ -1,0 +1,729 @@
+﻿<!-- KEEP THIS PART FOR VisualStudio IN THE FIRST 10 LINES
+    type:login
+-->
+<head>
+    <!-- Title of the custom login page -->
+    <title>Custom Login Sample</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+</head>
+
+
+<style>
+    @font-face {
+        font-family: PoppinsRegular;
+        src: url('../Fonts/Poppins-Regular.woff');
+    }
+
+    /* Styles for custom login page
+    Overwrite or add new styles here
+    */
+    body {
+        height: 100%;
+        font-family: PoppinsRegular;
+        background: #E6E6E6;
+    }
+    /*---------------------------------------------*/
+    a {
+        font-family: PoppinsRegular;
+        font-size: 14px;
+        line-height: 1.7;
+        color: #666666;
+        margin: 0px;
+        transition: all 0.4s;
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+    }
+
+        a:focus {
+            outline: none !important;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #333333;
+        }
+
+    /*---------------------------------------------*/
+
+    .outer-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        box-sizing: border-box;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container-wrap-login {
+        box-sizing: border-box;
+        display: inline-block;
+        height: 100%;
+    }
+
+    .container-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .machine-background {
+        box-shadow: 0 0 5px #43655A;
+        width: 800px;
+        height: 600px;
+        background: #EEEEEE;
+        border-radius: 5px 0px 0px 5px;
+        border-color: #A8B3BC;
+        border-right-width: 0px;
+        border-top-width: 4px;
+        border-bottom-width: 4px;
+        border-left-width: 4px;
+        border-style: solid;
+        background-image: url('../Images/machine.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center center;
+    }
+
+    .login-form {
+        box-shadow: 0 0 5px #43655A;
+        margin-left: 10px;
+        width: 300px;
+        height: 600px;
+        background: #CDD0D5;
+        border-radius: 0px 5px 5px 0px;
+        border-color: #A8B3BC;
+        border-right-width: 4px;
+        border-top-width: 4px;
+        border-bottom-width: 4px;
+        border-left-width: 0px;
+        border-style: solid;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-form-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .logo-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        vertical-align: top;
+    }
+
+    .logo {
+        background-image: url('../Images/Beckhoff_Logo.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        width: 300px;
+        height: 60px;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .label-title {
+        color: #666666;
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .input-password {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 2px rgb(204, 204, 204);
+        border-color: #43655A;
+        border-width: 2px;
+        margin-top: 10px;
+        width: 200px;
+        height: 40px;
+        font-size: 14px;
+        color: #666666;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .error {
+        color: #FF0000;
+        display: block;
+        width: 165px;
+        margin-bottom: 15px
+    }
+
+    p {
+        margin-top: 0;
+        text-align: justify;
+        display: block;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
+
+    .login-container label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .dropdown {
+        text-align-last: center;
+        display: inline-block;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 2px rgb(204, 204, 204);
+        transition: all .5s ease;
+        font-size: 14px;
+        border-color: #43655A;
+        border-width: 2px;
+        margin-top: 10px;
+        width: 200px;
+        height: 40px;
+        color: #666666;
+        cursor: default;
+    }
+
+    .user-wrapper {
+        margin-right: 24px;
+        display: flex;
+        flex-direction: row;
+        /* center items horizontally, in this case */
+        justify-content: center;
+        /* center items vertically, in this case */
+        align-items: center;
+    }
+
+    .password-wrapper {
+        margin-right: 24px;
+        display: flex;
+        flex-direction: row;
+        /* center items horizontally, in this case */
+        justify-content: center;
+        /* center items vertically, in this case */
+        align-items: center;
+    }
+
+    .user-icon {
+        margin-top: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 16px;
+        width: 16px;
+        background-image: url('../Images/LoginPage/user-solid.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center center;
+        margin-right: 8px;
+        display: inline-block;
+    }
+
+    .password-icon {
+        margin-top: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        vertical-align: central;
+        height: 16px;
+        width: 16px;
+        background-image: url('../Images/LoginPage/lock-solid.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center center;
+        margin-right: 8px;
+        display: inline-block;
+    }
+
+    .login-button {
+        font-family: PoppinsRegular;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 24px;
+        margin-top: 10px;
+        width: 200px;
+        height: 40px;
+        border-radius: 3px;
+        background: #00ad5f;
+        color: #fff;
+        font-size: 14px;
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        transition: all 0.4s;
+    }
+
+        .login-button:hover {
+            background: #333333;
+        }
+
+    .label-stay {
+        margin-left: 24px;
+        width: 200px;
+        text-align: center;
+        margin-top: 10px;
+        color: #666666;
+        font-size: 14px;
+    }
+
+    #switch-user-info {
+        padding-top: 10px;
+        width: 165px;
+    }
+
+    @media (max-height: 574px) {
+        .login-container .break {
+            display: none;
+        }
+
+        .login-container h3 {
+            margin-bottom: 5px;
+        }
+
+        .login-container input, .login-container select {
+            float: right;
+            margin-left: 5px;
+        }
+
+        input[type=button], input[type=submit], button {
+            width: 100%;
+        }
+
+        .error {
+            width: 224px;
+        }
+
+        #switch-user-info {
+            width: 100%;
+        }
+    }
+</style>
+
+<body>
+    <div class="outer-container">
+        <div class="container-wrap-login">
+            <div class="container-wrapper">
+                <div class="machine-background"></div>
+                <div class="login-form">
+                    <div class="logo-wrapper">
+                        <div class="logo"></div>
+                    </div>
+                    <div class="form">
+                        <!-- will be overwritten later if this acts as a switch user page -->
+                        <label id="title" class="label-title">Account Login</label>
+
+                        <div class="user-wrapper">
+                            <div class="user-icon"></div>
+                            <!-- drop down list -->
+                            <select id="user-list" class="dropdown" />
+                            <!-- needed for password manager in Google Chrome -->
+                            <input id="user-name-input" class="user-name-input" type="text" style="display: none;">
+                        </div>
+
+                        <div class="password-wrapper">
+                            <div class="password-icon"></div>
+                            <!-- Password field-->
+                            <input id="password-input" class="input-password" type="password" placeholder="Password" autofocus autocomplete="off">
+                        </div>
+
+
+                        <label class="label-stay">
+                            Stay logged in
+                            <input id="stay-logged-in-input" type="checkbox">
+                        </label>
+                        <!-- will be overwritten later if this acts as a switch user page -->
+                        <button id="login-button" type="button" class="login-button">Login</button>
+                        <div></div>
+                        <div id="switch-user-info">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- #region Script for custom login page
+    Overwrite or add new code here
+    -->
+    <script>
+
+        /** called if the page is loaded
+         */
+        window.addEventListener('load', function () {
+
+            /** User list element in html
+             * @type {HTMLSelectElement} */
+            var userList = document.getElementById('user-list');
+
+            /** Login button element in html
+             * @type {HTMLButtonElement} */
+            var loginButton = document.getElementById('login-button');
+
+            /** Password input element in html
+             * @type {HTMLInputElement} */
+            var passwordInput = document.getElementById('password-input');
+
+            /** Input element for user name
+             * @type {HTMLInputElement} */
+            var userInput = document.getElementById('user-name-input');
+
+            /** Input element for stay logged in option
+             * @type {HTMLInputElement} */
+            var stayLoggedInInput = document.getElementById('stay-logged-in-input');
+
+            /** Show / hide keyboard button element in html
+             * @type {HTMLDivElement} */
+            var toggleKeyboardButton = document.getElementsByClassName('keyboard-toggle')[0];
+
+
+            // call listUserNames to list all users in the project
+            listUserNames(userList);
+
+            // register onchange event to update the password input element on selection changed
+            userList.onchange = function () {
+                // needed from password save support in Google Chrome
+                if (this.nextElementSibling != null) {
+                    this.nextElementSibling.value = this.value;
+                }
+            };
+
+            // add event listener for enter key to login with enter after password input
+            passwordInput.addEventListener('keydown', function (event) {
+                if (event.key === "Enter") {
+                    // proceed a login
+                    loginButton.click();
+                }
+            });
+
+            // register onclick event for login button to proceed a login
+            loginButton.onclick = function () {
+                // proceed a login with current values
+                login(userInput.value, passwordInput.value, stayLoggedInInput.checked);
+            };
+
+            // register onclick event for button to set focus in password input
+            toggleKeyboardButton.onclick = function () {
+                // set focus on password input
+                var firstpasswordInput = document.querySelector('input[autofocus]');
+                if (firstpasswordInput) {
+                    firstpasswordInput.focus();
+                }
+            };
+        });
+
+        /**
+         * Send WebSocket request for login with username, password and stay logged in option
+         * @param {string} username
+         * @param {string} password
+         * @param {boolean} stayLoggedIn
+         */
+        function login(username, password, stayLoggedIn) {
+            var url = currentWebsocket();
+            try {
+                // open new WS connection
+                var ws = new WebSocket(url);
+            } catch (ex) {
+                if (ex instanceof Error) {
+                    showError("WebSocket error!", "Could not connect to " + url + ". " + ex.message);
+                } else {
+                    showError("WebSocket error!", "Could not connect to " + url + ".");
+                }
+                // abort
+                return;
+            }
+
+            // send WS request
+            ws.onopen = function () {
+                // build message
+                var message = {
+                    "requestType": "ReadWrite",
+                    "commands": [
+                        {
+                            "commandOptions": ["SendErrorMessage", "SendWriteValue"],
+                            "symbol": "Login",
+                            "writeValue":
+                            {
+                                "userName": username,
+                                "password": password,
+                                "persistent": stayLoggedIn
+                            }
+                        }
+                    ]
+                };
+
+                ws.send(JSON.stringify(message));
+            };
+
+            // react on WS response
+            ws.onmessage = function (messageEvent) {
+                // parse response to JSON object
+                var jsonObj = JSON.parse(messageEvent.data);
+
+                // check for errors
+                if (jsonObj && jsonObj.commands[0].error) {
+                    if (jsonObj.commands[0].error.message) {
+                        // print error on screen
+                        showError("Login failed.", jsonObj.commands[0].error.message);
+                        // clear password field
+                        var passwordInput = document.getElementById('password-input');
+                        passwordInput.value = "";
+                    }
+                } else {
+                    if (stayLoggedIn) {
+                        // Remember the current session for 30 days
+                        document.cookie = "sessionId=" + jsonObj.sessionId + ";path=/;max-age=" + 60 * 60 * 24 * 30;
+                    } else {
+                        // Reset max-age
+                        document.cookie = "sessionId=" + jsonObj.sessionId + ";path=/";
+                    }
+                    // login was successful, load base url
+                    if (window.location.href.indexOf("Login") != -1) {
+                        window.location.href = window.location.href.replace(/Login.*?\//, '');
+                    }
+                    else {
+                        window.location.reload();
+                    }
+                }
+            };
+
+            // show WS errors
+            ws.onerror = function (errorEvent) {
+                showError("WebSocket error!", errorEvent.data);
+            };
+        }
+
+        /**
+         * Send WebSocket request to get a list of the user names
+         * @param {HTMLSelectElement} selectElement
+         */
+        function listUserNames(selectElement) {
+            // open new WS connection
+            var url = currentWebsocket();
+            try {
+                // open new WS connection
+                var ws = new WebSocket(url);
+            } catch (ex) {
+                if (ex instanceof Error) {
+                    showError("WebSocket error!", "Could not connect to " + url + ". " + ex.message);
+                } else {
+                    showError("WebSocket error!", "Could not connect to " + url + ".");
+                }
+                // abort
+                return;
+            }
+
+            // send WS request
+            ws.onopen = function () {
+                // build message
+                var message = {
+                    "requestType": "ReadWrite",
+                    "commands": [
+                        {
+                            "commandOptions": ["SendErrorMessage", "SendWriteValue"],
+                            "symbol": "GetCurrentUser::name"
+                        },
+                        {
+                            "commandOptions": ["SendErrorMessage", "SendWriteValue"],
+                            "symbol": "ListUserNames"
+                        },
+                        {
+                            "commandOptions": ["SendErrorMessage", "SendWriteValue"],
+                            "symbol": "UserSelectType"
+                        },
+                        {
+                            "commandOptions": ["SendErrorMessage", "SendWriteValue"],
+                            "symbol": "ListDomains::TcHmiSrv::productVersion"
+                        }
+                    ]
+                };
+
+                ws.send(JSON.stringify(message));
+            };
+
+            // react on WS response
+            ws.onmessage = function (messageEvent) {
+                // parse response to JSON object
+                var jsonObj = JSON.parse(messageEvent.data);
+
+                // check for errors in response
+                if (jsonObj && jsonObj.error) {
+                    if (jsonObj.error.message) {
+                        showError("List users failed.", jsonObj.error.message);
+                    }
+                }
+
+                // check if user name list exists inside response
+                if (jsonObj
+                    && jsonObj.commands
+                ) {
+                    var currentUserNameCommand = null;
+                    var listUserNamesCommand = null;
+                    var productVersionCommand = null;
+                    var userSelectTypeCommand = null;
+                    for (var i = 0; i < jsonObj.commands.length; i++) {
+                        if (jsonObj.commands[i].symbol == "GetCurrentUser::name") {
+                            currentUserNameCommand = jsonObj.commands[i];
+                        } else if (jsonObj.commands[i].symbol == "ListUserNames") {
+                            listUserNamesCommand = jsonObj.commands[i];
+                        } else if (jsonObj.commands[i].symbol == "ListDomains::TcHmiSrv::productVersion") {
+                            productVersionCommand = jsonObj.commands[i];
+                        } else if (jsonObj.commands[i].symbol == "UserSelectType") {
+                            userSelectTypeCommand = jsonObj.commands[i];
+                        }
+                    }
+
+                    if (currentUserNameCommand && currentUserNameCommand.readValue) {
+                        if (currentUserNameCommand.readValue !== "__SystemGuest") {
+                            var titleDiv = document.getElementById('title');
+                            if (titleDiv) {
+                                titleDiv.innerHTML = 'Switch user';
+                            }
+                            var submitButton = document.getElementById('login-button');
+                            if (submitButton) {
+                                submitButton.innerHTML = 'Switch';
+                            }
+                            var activeLogin = document.getElementById('switch-user-info');
+                            if (activeLogin) {
+                                activeLogin.innerHTML = "Logged in as " + currentUserNameCommand.readValue +
+                                    "<div></div><a href='/'>Start page</a>";
+                            }
+                        }
+                    }
+                    if (userSelectTypeCommand && userSelectTypeCommand.readValue === 1) {
+                        // we should show a textfield
+                        updateUserSelection(selectElement, null);
+                    } else {
+                        if (listUserNamesCommand) {
+                            // build selection options with user names (could be undefined when we have no access)
+                            updateUserSelection(selectElement, listUserNamesCommand.readValue);
+                        }
+                    }
+                    if (productVersionCommand && productVersionCommand.readValue) {
+                        // print server version
+                        var versionTarget = document.getElementById("version");
+                        if (versionTarget) {
+                            versionTarget.innerText = "TwinCAT HMI version: " + productVersionCommand.readValue;
+                        }
+                    }
+                }
+            };
+
+
+            // show WS errors
+            ws.onerror = function (errorEvent) {
+                showError("WebSocket error!", errorEvent.data);
+            };
+        }
+
+        /**
+         * Update user list dependent on user name list
+         * @param {HTMLSelectElement} selectElement
+         * @param {string[] | null | undefined} userArr User list or null/undefined if textbox should be used
+         */
+        function updateUserSelection(selectElement, userArr) {
+            /** Input element for user name
+             * @type {HTMLInputElement} */
+            var userInput = document.getElementById('user-name-input');
+            if (userArr && userArr.length) {
+                // create one option per entry
+                for (var i = 0; i < userArr.length; i++) {
+                    // uncomment if you want to left out the internal __SystemAdministrator user
+                    // only if you have another user that is member of __SystemAdministrators group
+                    /*if (userArr[i] === "__SystemAdministrator") {
+                        continue;
+                    }*/
+
+                    // create new option element
+                    var opt = document.createElement('option');
+                    // set value and text to current user name
+                    opt.value = userArr[i];
+                    opt.innerHTML = userArr[i];
+                    // add option to selection field
+                    selectElement.add(opt);
+                }
+                // set the input field to first entry in the list
+                if (userInput && selectElement.childElementCount) {
+                    userInput.value = selectElement.firstElementChild.value;
+                }
+            } else {
+                // we have no right to list the users
+                // show input element and hide list
+                var userList = document.getElementById('user-list');
+                if (userList) {
+                    userList.style.display = 'none';
+                    // show textbox
+                    userInput.style.display = '';
+                }
+            }
+        }
+
+        /**
+         * Show errors on page
+         *
+         * @param {string} type Prefix of error message
+         * @param {string} message Message itself
+         */
+        function showError(type, message) {
+            /** Login container element in html
+             * @type {HTMLDivElement}
+             */
+            var loginContainer = document.querySelector('.login-container');
+
+            var errMsg;
+
+            // check message and build output string
+            if (message === "AUTH_FAILED") {
+                errMsg = type + '<br>' + "Invalid username or password.";
+            }
+            else if (message === "AUTH_WAIT") {
+                errMsg = type + '<br>' + "Too many failed login attempts. Please try again later.";
+            } else {
+                errMsg = type + '<br>' + message;
+            }
+
+            if (loginContainer) {
+                // remove previous error element
+                if (loginContainer.firstElementChild.tagName === "P") {
+                    loginContainer.removeChild(loginContainer.firstElementChild);
+                }
+
+                // create error text element
+                var errorElement = document.createElement("p");
+
+                // add style and output string
+                errorElement.classList.add('error');
+                errorElement.innerHTML = errMsg;
+
+                // append error message on top of the login container
+                loginContainer.insertBefore(errorElement, loginContainer.firstElementChild);
+            }
+        }
+
+        // get current WebSocket url
+        function currentWebsocket() {
+            if (window.location.protocol == "https:") {
+                return "wss://" + window.location.host;
+            }
+            else {
+                return "ws://" + window.location.host;
+            }
+        }
+    </script>
+
+</body>
